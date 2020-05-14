@@ -5,6 +5,15 @@ const port = 8000;
 
 //route parameters = (params)
 //query parameters = (query)
+function logger(req, res, next) {
+    console.log("This is your request: ", req)
+    next();
+};
+
+//This is the middleware. based on location in doc do "x" with response data
+//Should be above routes (best practices- 99% of the time)
+app.use("/cat", logger);
+app.use(express.static('public'));
 
 app.get("/cat", (req, res) => res.send(data.filter(animal => animal.type == "cat")));
 app.get("/dog", (req, res) => res.send(data.filter(animal => animal.type == "dog")));
@@ -26,5 +35,6 @@ app.get("/", (req, res) => {
         res.json(data);
     }
 });
+
 
 app.listen(port, () => console.log(`Listening on port http://localhost:${port}`));
